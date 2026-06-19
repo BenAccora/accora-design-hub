@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: accora-design-hub
+    runtime: static
+    # Static link hub — pure HTML/CSS, no build step, no server compute.
+    buildCommand: ""
+    staticPublishPath: .
+    # Plain single-file static site — no rewrite rules needed.
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: no-cache

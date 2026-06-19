@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Accora Design Team Sites</title>
+  <style>
+    :root {
+      /* Accora green palette — matches linkage-fea / fab-exporter */
+      --bg: #0e1512;
+      --panel: #15201c;
+      --panel-hover: #1d2a25;
+      --border: #2a3a33;
+      --text: #e7efeb;
+      --muted: #8ba398;
+      --accent: #16b88c;        /* brightened Accora green for dark mode */
+      --accent-soft: rgba(22, 184, 140, 0.12);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap { max-width: 920px; margin: 0 auto; padding: 56px 24px 80px; }
+    header { margin-bottom: 40px; }
+    h1 { font-size: 2rem; margin: 0 0 6px; letter-spacing: -0.02em; }
+    .tagline { color: var(--muted); margin: 0; font-size: 1.05rem; }
+    h2 {
+      font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--muted); font-weight: 600; margin: 40px 0 16px;
+    }
+    .grid {
+      display: grid; gap: 14px;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    }
+    a.card {
+      display: block; text-decoration: none; color: inherit;
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px;
+      transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+    }
+    a.card:hover {
+      background: var(--panel-hover); border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .card-title {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 1.05rem; font-weight: 600; margin-bottom: 6px;
+    }
+    .card-title .dot {
+      width: 8px; height: 8px; border-radius: 50%; background: var(--accent);
+      flex: none;
+    }
+    .card-desc { color: var(--muted); font-size: 0.9rem; margin: 0 0 12px; }
+    .card-url {
+      font-size: 0.82rem; color: var(--accent);
+      word-break: break-all; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    .owner { font-size: 0.78rem; color: var(--muted); margin-top: 10px; }
+    footer { margin-top: 56px; color: var(--muted); font-size: 0.8rem; }
+    .empty {
+      border: 1px dashed var(--border); border-radius: 12px; padding: 20px;
+      color: var(--muted); font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Accora Design Team Sites</h1>
+      <p class="tagline">Quick links to the team's deployed tools and sites.</p>
+    </header>
+    <main id="app"></main>
+    <footer>
+      Add or edit links in <code>index.html</code> &rarr; the <code>sites</code> list. Then push to deploy.
+    </footer>
+  </div>
+
+  <script>
+    // ───────────────────────────────────────────────────────────────
+    // Edit this list to add, remove, or update links.
+    // ───────────────────────────────────────────────────────────────
+    const sites = [
+      {
+        name: "Accora Fab Exporter",
+        url: "https://accora-fab-exporter.onrender.com",
+        desc: "Onshape → fabrication export tool.",
+      },
+      {
+        name: "Linkage Force Studio",
+        url: "https://linkage-force-studio.onrender.com",
+        desc: "In-browser linkage force / FEA studio.",
+      },
+      {
+        name: "Accora Router CAM Engine",
+        url: "https://accora-router-cam-engine.onrender.com",
+        desc: "CNC router CAM generation engine.",
+      },
+      // ── Add more sites here ──
+      // {
+      //   name: "Example Tool",
+      //   url: "https://example.onrender.com",
+      //   desc: "What it does.",
+      // },
+    ];
+
+    const app = document.getElementById("app");
+
+    if (sites.length === 0) {
+      app.innerHTML = '<div class="empty">No links yet. Add entries to the <code>sites</code> list in index.html.</div>';
+    } else {
+      const grid = document.createElement("div");
+      grid.className = "grid";
+      for (const s of sites) {
+        const a = document.createElement("a");
+        a.className = "card";
+        a.href = s.url;
+        a.target = "_blank";
+        a.rel = "noopener";
+        a.innerHTML =
+          '<div class="card-title"><span class="dot"></span>' + escapeHtml(s.name) + "</div>" +
+          (s.desc ? '<p class="card-desc">' + escapeHtml(s.desc) + "</p>" : "") +
+          '<div class="card-url">' + escapeHtml(s.url.replace(/^https?:\/\//, "")) + "</div>";
+        grid.appendChild(a);
+      }
+      app.appendChild(grid);
+    }
+
+    function escapeHtml(str) {
+      return String(str).replace(/[&<>"']/g, (c) => (
+        { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]
+      ));
+    }
+  </script>
+</body>
+</html>
